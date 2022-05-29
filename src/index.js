@@ -37,9 +37,11 @@ const decryptButton = document.getElementById('decryptButton');
 const encryptionKeyDisplay = document.getElementById('encryptionKeyDisplay');
 const ciphertextDisplay = document.getElementById('ciphertextDisplay');
 const cleartextDisplay = document.getElementById('cleartextDisplay');
+const ciphertextInput = document.getElementById('ciphertextInput');
 
 // Send form section
 const fromDiv = document.getElementById('fromInput');
+const toDiv = document.getElementById('toInput');
 
 // Miscellaneous
 const addEthereumChain = document.getElementById('addEthereumChain');
@@ -97,6 +99,7 @@ const initialize = async () => {
     encryptionKeyDisplay.innerText = '';
     encryptMessageInput.value = '';
     ciphertextDisplay.innerText = '';
+    ciphertextInput.value = '';
     cleartextDisplay.innerText = '';
   };
 
@@ -189,7 +192,7 @@ const initialize = async () => {
 
     getEncryptionKeyButton.onclick = async () => {
       try {
-        encryptionKeyDisplay.innerText = await ethereum.request({
+        toDiv.value = encryptionKeyDisplay.innerText = await ethereum.request({
           method: 'eth_getEncryptionPublicKey',
           params: [accounts[0]],
         });
@@ -198,7 +201,7 @@ const initialize = async () => {
         encryptionKeyDisplay.innerText = `Error: ${error.message}`;
         encryptMessageInput.disabled = true;
         encryptButton.disabled = true;
-        decryptButton.disabled = true;
+        decryptButton.disabled = false;
       }
     };
 
@@ -217,16 +220,16 @@ const initialize = async () => {
 
     encryptButton.onclick = () => {
       try {
-        ciphertextDisplay.innerText = stringifiableToHex(
+        ciphertextInput.value = ciphertextDisplay.innerText = stringifiableToHex(
           encrypt(
-            encryptionKeyDisplay.innerText,
+            toDiv.value,
             { data: encryptMessageInput.value },
             'x25519-xsalsa20-poly1305',
           ),
         );
         decryptButton.disabled = false;
       } catch (error) {
-        ciphertextDisplay.innerText = `Error: ${error.message}`;
+        ciphertextInput.value = ciphertextDisplay.innerText = `Error: ${error.message}`;
         decryptButton.disabled = true;
       }
     };
@@ -235,10 +238,10 @@ const initialize = async () => {
       try {
         cleartextDisplay.innerText = await ethereum.request({
           method: 'eth_decrypt',
-          params: [ciphertextDisplay.innerText, ethereum.selectedAddress],
+          params: [ciphertextInput.value, ethereum.selectedAddress],
         });
       } catch (error) {
-        cleartextDisplay.innerText = `Error: ${error.message}`;
+        ciphertextInput.value = cleartextDisplay.innerText = `Error: ${error.message}`;
       }
     };
   };
@@ -247,6 +250,7 @@ const initialize = async () => {
     accounts = newAccounts;
     accountsDiv.innerHTML = accounts;
     fromDiv.value = accounts;
+    decryptButton.disabled = false;
     if (isMetaMaskConnected()) {
       initializeAccountButtons();
     }

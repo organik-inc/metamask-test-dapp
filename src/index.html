@@ -34,6 +34,23 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">
+                  My Address
+                </h4>
+                <div class="form-group">
+                  <label>From</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="fromInput"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">
                   Encrypt / Decrypt
                 </h4>
 
@@ -44,8 +61,21 @@
                 >
                   Get Encryption Key
                 </button>
-
+                
+                <p class="info-text alert alert-secondary">
+                  Encryption key: <span id="encryptionKeyDisplay"></span>
+                </p>
+                
                 <hr />
+
+                <div class="form-group">
+                  <label>To (Public Key)</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="toInput"
+                  />
+                </div>
 
                 <div id="encrypt-message-form">
                   <input
@@ -62,8 +92,25 @@
                     Encrypt
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="card">
+              <div class="card-body">
 
-                <hr />
+                <p class="info-text text-truncate alert alert-secondary">
+                  Ciphertext: <span id="ciphertextDisplay"></span>
+                </p>
+                
+                <div class="form-group">
+                  <label>Ciphertext</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="ciphertextInput"
+                  />
+                </div>
 
                 <button
                   class="btn btn-primary btn-lg btn-block mb-3"
@@ -72,14 +119,6 @@
                 >
                   Decrypt
                 </button>
-
-                <p class="info-text alert alert-secondary">
-                  Encryption key: <span id="encryptionKeyDisplay"></span>
-                </p>
-
-                <p class="info-text text-truncate alert alert-secondary">
-                  Ciphertext: <span id="ciphertextDisplay"></span>
-                </p>
 
                 <p class="info-text alert alert-secondary">
                   Cleartext: <span id="cleartextDisplay"></span>
@@ -122,28 +161,6 @@
             <p class="info-text alert alert-success">
               Accounts: <span id="accounts"></span>
             </p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="row d-flex justify-content-center">
-          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">
-                  My Address
-                </h4>
-                <div class="form-group">
-                  <label>From</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="fromInput"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
