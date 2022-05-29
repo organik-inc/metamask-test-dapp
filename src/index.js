@@ -49,6 +49,7 @@ const switchEthereumChain = document.getElementById('switchEthereumChain');
 // MAIN FUNCTION (Runs OnLoad)
 
 const initialize = async () => {
+  
   try {
     // We must specify the network as 'any' for ethers to allow network changes
     ethersProvider = new ethers.providers.Web3Provider(window.ethereum, 'any');
@@ -255,11 +256,13 @@ const initialize = async () => {
   function handleNewChain(chainId) {
     chainIdDiv.innerHTML = chainId;
 
+    // Show MainNet Warning
     if (chainId === '0x1') {
       warningDiv.classList.remove('warning-invisible');
     } else {
       warningDiv.classList.add('warning-invisible');
     }
+
   }
 
   function handleEIP1559Support(supported) {
@@ -310,6 +313,9 @@ const initialize = async () => {
     ethereum.autoRefreshOnNetworkChange = false;
     getNetworkAndChainId();
 
+    /** 
+     * chainChanged (2 Methods)
+     */
     ethereum.on('chainChanged', (chain) => {
       handleNewChain(chain);
       ethereum
@@ -322,6 +328,10 @@ const initialize = async () => {
         });
     });
     ethereum.on('chainChanged', handleNewNetwork);
+    
+    /** 
+     * accountsChanged (1 Method)
+     */
     ethereum.on('accountsChanged', (newAccounts) => {
       ethereum
         .request({
@@ -342,6 +352,8 @@ const initialize = async () => {
     } catch (err) {
       console.error('Error on init when getting accounts', err);
     }
+
+
   }
 };
 
