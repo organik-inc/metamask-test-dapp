@@ -26,11 +26,13 @@ const getAccountsButton = document.getElementById('getAccounts');
 const getAccountsResults = document.getElementById('getAccountsResult');
 
 // Permissions Actions Section
+/** *!/
 const requestPermissionsButton = document.getElementById('requestPermissions');
 const getPermissionsButton = document.getElementById('getPermissions');
 const permissionsResult = document.getElementById('permissionsResult');
-
+/** */
 // Contract Section
+/** *!/
 const deployButton = document.getElementById('deployButton');
 const depositButton = document.getElementById('depositButton');
 const withdrawButton = document.getElementById('withdrawButton');
@@ -38,7 +40,9 @@ const contractStatus = document.getElementById('contractStatus');
 const deployFailingButton = document.getElementById('deployFailingButton');
 const sendFailingButton = document.getElementById('sendFailingButton');
 const failingContractStatus = document.getElementById('failingContractStatus');
+/** */
 
+/** !/
 // Collectibles Section
 const deployCollectiblesButton = document.getElementById(
   'deployCollectiblesButton',
@@ -46,12 +50,15 @@ const deployCollectiblesButton = document.getElementById(
 const mintButton = document.getElementById('mintButton');
 const mintAmountInput = document.getElementById('mintAmountInput');
 const collectiblesStatus = document.getElementById('collectiblesStatus');
-
+/** */
 // Send Eth Section
+/** *!/
 const sendButton = document.getElementById('sendButton');
 const sendEIP1559Button = document.getElementById('sendEIP1559Button');
+/** */
 
 // Send Tokens Section
+/** *!/
 const tokenAddress = document.getElementById('tokenAddress');
 const createToken = document.getElementById('createToken');
 const watchAsset = document.getElementById('watchAsset');
@@ -63,7 +70,7 @@ const transferTokensWithoutGas = document.getElementById(
 const approveTokensWithoutGas = document.getElementById(
   'approveTokensWithoutGas',
 );
-
+/** */
 // Encrypt / Decrypt Section
 const getEncryptionKeyButton = document.getElementById(
   'getEncryptionKeyButton',
@@ -124,6 +131,9 @@ const submitFormButton = document.getElementById('submitForm');
 const addEthereumChain = document.getElementById('addEthereumChain');
 const switchEthereumChain = document.getElementById('switchEthereumChain');
 
+
+// MAIN FUNCTION (Runs OnLoad)
+
 const initialize = async () => {
   try {
     // We must specify the network as 'any' for ethers to allow network changes
@@ -143,34 +153,34 @@ const initialize = async () => {
   let accountButtonsInitialized = false;
 
   const accountButtons = [
-    deployButton,
-    depositButton,
-    withdrawButton,
-    deployCollectiblesButton,
-    mintButton,
-    mintAmountInput,
-    deployFailingButton,
-    sendFailingButton,
-    sendButton,
-    createToken,
-    watchAsset,
-    transferTokens,
-    approveTokens,
-    transferTokensWithoutGas,
-    approveTokensWithoutGas,
+    // deployButton,
+    // depositButton,
+    // withdrawButton,
+    // deployCollectiblesButton,
+    // mintButton,
+    // mintAmountInput,
+    // deployFailingButton,
+    // sendFailingButton,
+    // sendButton,
+    // createToken,
+    // watchAsset,
+    // transferTokens,
+    // approveTokens,
+    // transferTokensWithoutGas,
+    // approveTokensWithoutGas,
     getEncryptionKeyButton,
     encryptMessageInput,
     encryptButton,
     decryptButton,
-    ethSign,
-    personalSign,
-    personalSignVerify,
-    signTypedData,
-    signTypedDataVerify,
-    signTypedDataV3,
-    signTypedDataV3Verify,
-    signTypedDataV4,
-    signTypedDataV4Verify,
+    // ethSign,
+    // personalSign,
+    // personalSignVerify,
+    // signTypedData,
+    // signTypedDataVerify,
+    // signTypedDataV3,
+    // signTypedDataV3Verify,
+    // signTypedDataV4,
+    // signTypedDataV4Verify,
   ];
 
   const isMetaMaskConnected = () => accounts && accounts.length > 0;
@@ -208,17 +218,17 @@ const initialize = async () => {
       }
       clearTextDisplays();
     } else {
-      deployCollectiblesButton.disabled = false;
-      sendButton.disabled = false;
-      createToken.disabled = false;
-      personalSign.disabled = false;
-      signTypedData.disabled = false;
+      // deployCollectiblesButton.disabled = false;
+      // sendButton.disabled = false;
+      // createToken.disabled = false;
+      // personalSign.disabled = false;
+      // signTypedData.disabled = false;
       getEncryptionKeyButton.disabled = false;
-      ethSign.disabled = false;
-      personalSign.disabled = false;
-      signTypedData.disabled = false;
-      signTypedDataV3.disabled = false;
-      signTypedDataV4.disabled = false;
+      // ethSign.disabled = false;
+      // personalSign.disabled = false;
+      // signTypedData.disabled = false;
+      // signTypedDataV3.disabled = false;
+      // signTypedDataV4.disabled = false;
     }
 
     if (isMetaMaskInstalled()) {
@@ -274,7 +284,7 @@ const initialize = async () => {
       return;
     }
     accountButtonsInitialized = true;
-
+    /** *!/
     sendEIP1559Button.onclick = async () => {
       const result = await ethereum.request({
         method: 'eth_sendTransaction',
@@ -291,6 +301,7 @@ const initialize = async () => {
       });
       console.log(result);
     };
+    /** */
 
     /**
      * Permissions
@@ -373,9 +384,9 @@ const initialize = async () => {
     accounts = newAccounts;
     accountsDiv.innerHTML = accounts;
     fromDiv.value = accounts;
-    gasPriceDiv.style.display = 'block';
-    maxFeeDiv.style.display = 'none';
-    maxPriorityDiv.style.display = 'none';
+    // gasPriceDiv.style.display = 'block';
+    // maxFeeDiv.style.display = 'none';
+    // maxPriorityDiv.style.display = 'none';
     if (isMetaMaskConnected()) {
       initializeAccountButtons();
     }
@@ -394,13 +405,17 @@ const initialize = async () => {
 
   function handleEIP1559Support(supported) {
     if (supported && Array.isArray(accounts) && accounts.length >= 1) {
+      /** *!/
       sendEIP1559Button.disabled = false;
       sendEIP1559Button.hidden = false;
       sendButton.innerText = 'Send Legacy Transaction';
+      /** */
     } else {
+      /** *!/
       sendEIP1559Button.disabled = true;
       sendEIP1559Button.hidden = true;
       sendButton.innerText = 'Send';
+      /** */
     }
   }
 
