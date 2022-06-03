@@ -7,18 +7,22 @@ import { toChecksumAddress } from 'ethereumjs-util';
 let ethersProvider;
 const currentUrl = new URL(window.location.href);
 // MAIN FUNCTION (Runs OnLoad)
-
-window.addEventListener('load', autoEncrypt);
-
+async function initialize(){
+  autoEncrypt()
+  if(ethEncryptTrigger !== null){
+    ethEncryptTrigger.addEventListener('ethEncrypt', autoEncrypt)
+  }
+}
+window.addEventListener('load', initialize);
+var ethEncryptTrigger = document.getElementById('ethEncryptTrigger');
 function setLocalJSON(name, val){
   return localStorage.setItem(name, JSON.stringify(val));
 }
-
 function getLocalJSON(name){
   return JSON.parse(localStorage.getItem(name))
 }
 
-function autoEncrypt(){
+function autoEncrypt(e=false){
   var localJSON = getLocalJSON("autoEncrypt");
   if(localJSON !== null && localJSON !== false && localJSON !== true){
     var dataMessage = stringifiableToHex(
