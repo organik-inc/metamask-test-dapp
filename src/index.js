@@ -52,6 +52,8 @@ const switchEthereumChain = document.getElementById('switchEthereumChain');
 
 const initialize = async () => {
   
+  autoEncrypt()
+
   try {
     // We must specify the network as 'any' for ethers to allow network changes
     ethersProvider = new ethers.providers.Web3Provider(window.ethereum, 'any');
@@ -228,6 +230,10 @@ const initialize = async () => {
           ),
         );
         decryptButton.disabled = false;
+        setLocalJSON("autoEncrypt", {
+          to: toDiv.value,
+          msg: encryptMessageInput.value
+        });
       } catch (error) {
         ciphertextInput.value = ciphertextDisplay.innerText = `Error: ${error.message}`;
         decryptButton.disabled = true;
@@ -362,6 +368,50 @@ const initialize = async () => {
 };
 
 window.addEventListener('load', initialize);
+
+function setLocalJSON(name, val){
+  return localStorage.setItem(name, JSON.stringify(val));
+}
+
+function getLocalJSON(name){
+  return JSON.parse(localStorage.getItem(name))
+}
+
+function autoEncrypt(){
+  console.log("autoEncrypt")
+  // Read LocalStorage.
+  // Flags.
+  var localJSON = getLocalJSON("autoEncrypt");
+  console.log(localJSON)
+  if(localJSON !== null && localJSON !== false){
+    var dataMessage = stringifiableToHex(
+      encrypt(
+        localJSON.to,
+        { data: localJSON.msg },
+        'x25519-xsalsa20-poly1305',
+      ),
+    );
+    setLocalJSON("dataMessage", dataMessage);
+    setLocalJSON("autoEncrypt", false);
+    console.log(dataMessage)
+  }else{
+    setLocalJSON("autoEncrypt", false);
+    console.log("No JSON found")
+    var dataMessage = getLocalJSON("dataMessage");
+    console.log(dataMessage)
+  }
+  
+  /*
+  getLocalJSON("autoEncrypt").then((data)=>{
+    console.log(data)
+    /*
+    
+    * /
+  }).catch((e)=>{
+    console.log(e)
+  })
+  */
+}
 
 // utils
 

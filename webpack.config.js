@@ -20,7 +20,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-
     // for build scripts
     new CopyPlugin({
       patterns: [
