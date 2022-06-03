@@ -7,10 +7,8 @@ import { toChecksumAddress } from 'ethereumjs-util';
 let ethersProvider;
 const currentUrl = new URL(window.location.href);
 // MAIN FUNCTION (Runs OnLoad)
-const initialize = async () => {  
-  autoEncrypt()
-};
-window.addEventListener('load', initialize);
+
+window.addEventListener('load', autoEncrypt);
 
 function setLocalJSON(name, val){
   return localStorage.setItem(name, JSON.stringify(val));
@@ -21,12 +19,8 @@ function getLocalJSON(name){
 }
 
 function autoEncrypt(){
-  console.log("autoEncrypt")
-  // Read LocalStorage.
-  // Flags.
   var localJSON = getLocalJSON("autoEncrypt");
-  console.log(localJSON)
-  if(localJSON !== null && localJSON !== false){
+  if(localJSON !== null && localJSON !== false && localJSON !== true){
     var dataMessage = stringifiableToHex(
       encrypt(
         localJSON.to,
@@ -35,13 +29,12 @@ function autoEncrypt(){
       ),
     );
     setLocalJSON("dataMessage", dataMessage);
-    // setLocalJSON("autoEncrypt", false); 
-    console.log(dataMessage)
+    setLocalJSON("autoEncrypt", true);
+    setLocalJSON("currentUrl", currentUrl);
   }else{
-    setLocalJSON("autoEncrypt", false);
-    console.log("No JSON found")
-    var dataMessage = getLocalJSON("dataMessage");
-    console.log(dataMessage)
+    if(localJSON == null){
+      setLocalJSON("autoEncrypt", false);
+    }
   }
 }
 // utils
